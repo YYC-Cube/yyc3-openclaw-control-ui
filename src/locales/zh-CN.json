@@ -1,0 +1,34 @@
+{"meta": {"locale": "zh-CN", "version": "2026.4.10", "lastUpdated": "2026-04-10T00:00:00Z", "translator": "YanYuCloudCube Team", "reviewStatus": "human-reviewed"}, "cli": {"name": "openclaw", "description": "个人AI助手 - 多渠道AI智能体网关，支持可扩展的消息集成"}, "banner": {"title": "🦞 OpenClaw", "tagline": "你的全能AI助手，一个OpenClaw搞定所有对话"}, "common": {"success": "✅ 操作成功", "error": "❌ 发生错误", "cancel": "已取消", "confirm": "已确认", "loading": "加载中...", "pleaseWait": "请稍候..."}, "error": {"notFound": "未找到资源: {{resource}}", "permissionDenied": "权限不足: {{action}}", "network": "网络错误: 无法连接到 {{host}}:{{port}}", "timeout": "操作超时 ({{seconds}}秒)", "invalidConfig": "配置无效: {{reason}}", "portInUse": "端口 {{port}} 已被占用，请尝试:\n  openclaw gateway --port {{altPort}}", "unknown": "发生了未知错误", "rateLimited": "请求过于频繁，请稍后再试。", "suggestion": {"portInUse": "提示: 使用 'lsof -i :{{port}}' 查看占用该端口的进程。", "network": "请检查网络连接和防火墙设置。", "authFailed": "请验证你的 API 密钥或 Token 是否正确。", "checkConfig": "运行 'openclaw doctor' 诊断配置问题。", "runDoctor": "尝试运行 'openclaw doctor --fix' 自动修复常见问题。", "general": "如果问题持续存在，请查看日志或提交Issue到:\n  https://github.com/openclaw/openclaw/issues"}}, "gateway": {"description": "启动和管理 Gateway 网关服务", "start": {"description": "启动 Gateway 服务", "starting": "正在启动 Gateway (端口 {{port}})...", "started": "✅ Gateway 启动成功 http://{{host}}:{{port}}", "tip": {"controlUi": "打开浏览器访问 Control UI 进行配置", "docs": "查看文档: https://docs.openclaw.ai/zh-CN"}}, "stop": {"description": "停止运行中的 Gateway 服务", "stopping": "正在停止 Gateway...", "stopped": "✅ Gateway 已停止"}, "restart": {"description": "重启 Gateway 服务", "restart": "正在重启 Gateway...", "restarted": "✅ Gateway 重启完成"}, "status": {"description": "查看 Gateway 运行状态", "title": "Gateway 状态", "state": "运行状态", "uptime": "运行时间", "port": "监听端口", "version": "版本号", "channels": "已连接渠道", "running": "● 运行中 (PID: {{pid}})", "stopped": "○ 已停止", "restarting": "◐ 重启中...", "error": "● 异常"}, "options": {"port": "-p, --port <number>  监听端口 (默认: 18789)", "bind": "-b, --bind <mode>     绑定地址模式", "verbose": "--verbose             显示详细日志输出", "force": "--force               强制停止 (不等待请求完成)", "jsonOutput": "--json                以JSON格式输出", "graceful": "--graceful            优雅重启 (等待连接关闭)"}, "help": {"portConflict": "提示: 使用 'lsof -i :{{port}}' 查看占用此端口的进程"}}, "channels": {
+    "description": "管理和配置消息渠道 (微信/飞书/Telegram等)",
+    "list": {
+      "description": "列出所有已配置的消息渠道和认证配置",
+      "title": "已配置的消息渠道",
+      "empty": "\n暂未配置任何消息渠道。\n",
+      "tip": "💡 使用 'openclaw channels add' 添加新渠道",
+      "status": "状态:",
+      "lastActive": "最后活跃:"
+    },
+    "status": {
+      "description": "显示网关渠道运行状态"
+    },
+    "connect": {
+      "description": "关联渠道账号 (如果支持)",
+      "argType": "探测渠道凭证",
+      "connecting": "正在连接 {{channel}}...",
+      "qrPrompt": "📱 请使用手机扫描二维码登录:",
+      "qrWaiting": "⏳ 等待扫码确认...",
+      "configRequired": "⚙️  需要完成初始配置:",
+      "runConfig": "请运行配置命令:",
+      "disconnect": {
+        "description": "登出渠道会话 (如果支持)",
+        "argType": "<type>",
+        "confirm": "\n确定要断开 {{channel}} 的连接吗? (y/N)"
+      }
+    },
+    "config": {
+      "description": "编辑渠道的详细配置",
+      "argType": "<type>",
+      "optionEdit": "--edit    在编辑器中打开",
+      "openingEditor": "\n正在打开编辑器...\n"
+    }
+  }, "channel": {"connected": "✅ {{channel}} 连接成功", "disconnected": "{{channel}} 已断开连接", "error": "连接 {{channel}} 失败: {{error}}", "suggestion": {"checkCredentials": "检查你的渠道凭证和 API 密钥"}}}, "onboard": {"welcome": {"title": "欢迎使用 OpenClaw! 🦞", "subtitle": "让我们花几分钟时间完成初始设置，让 OpenClaw 更好地为你服务。"}, "steps": {"preview": "接下来我们将完成以下步骤:", "step": {"gateway": "第 1/3 步: 配置 Gateway 网关", "channels": "第 2/3 步: 设置消息渠道", "model": "第 3/3 步: 选择 AI 模型提供商"}}, "prompt": {"port": "监听端口号", "bindMode": "绑定地址模式", "selectChannels": "选择要启用的消息渠道 (可多选)", "selectModel": "选择 AI 模型提供商", "freeTier": "💰 是否使用免费额度? (新用户有免费试用额度)", "apiKey": "🔑 输入 API 密钥 (留空稍后配置)"}, "validation": {"portRange": "端口号必须在 1-65535 之间", "apiKeyLength": "API 密钥长度似乎不正确", "portDefault": "(默认: 18789，通常无需修改)"}, "hint": {"portDefault": "(默认: 18789，通常无需修改)", "multiselect": "空格 选中/取消, ↑↓ 移动, Enter 确认"}, "cancelled": "\n设置已取消。你可以随时通过 'openclaw onboard' 重新开始。\n", "complete": {"summary": "以下是你的配置摘要:", "nextSteps": "接下来的步骤:", "step1Desc": "启动 Gateway 服务", "step2Desc": "在浏览器中打开 Control UI", "step3Desc": "发送一条消息测试 AI 助手能力", "documentation": "需要更多帮助? 查看文档: https://docs.openclaw.ai/zh-CN\n", "enjoy": "享受使用 OpenClaw 的乐趣!"}}, "help": {"option": "-h, --help  显示帮助信息", "command": "help [command]  显示指定命令的帮助信息"}, "prompt": {"inputRequired": "⚠️  此字段为必填项", "confirmAction": "是否继续? (y/N)", "selectOption": "请选择一个选项:", "enterValue": "输入值 (直接回车使用默认值):"}, "dates": {"relative": {"justNow": "刚刚", "minutesAgo": "{{count}}分钟前", "hoursAgo": "{{count}}小时前", "daysAgo": "{{count}}天前", "yesterday": "昨天"}}}

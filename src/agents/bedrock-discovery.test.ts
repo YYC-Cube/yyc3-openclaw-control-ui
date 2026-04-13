@@ -1,8 +1,9 @@
-import type { BedrockClient } from "@aws-sdk/client-bedrock";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const sendMock = vi.fn();
-const clientFactory = () => ({ send: sendMock }) as unknown as BedrockClient;
+// Use any type to avoid AWS SDK version conflicts between root and extension packages
+// The extension uses its own @aws-sdk/client-bedrock which may differ from root
+const clientFactory: any = () => ({ send: sendMock });
 
 const baseActiveAnthropicSummary = {
   modelId: "anthropic.claude-3-7-sonnet-20250219-v1:0",

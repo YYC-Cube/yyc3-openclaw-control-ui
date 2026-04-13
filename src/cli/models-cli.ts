@@ -28,6 +28,7 @@ import { defaultRuntime } from "../runtime.js";
 import { formatDocsLink } from "../terminal/links.js";
 import { theme } from "../terminal/theme.js";
 import { resolveOptionFromCommand, runCommandWithRuntime } from "./cli-utils.js";
+import { t } from "../i18n/index.js";
 
 function runModelsCommand(action: () => Promise<void>) {
   return runCommandWithRuntime(defaultRuntime, action);
@@ -36,27 +37,27 @@ function runModelsCommand(action: () => Promise<void>) {
 export function registerModelsCli(program: Command) {
   const models = program
     .command("models")
-    .description("Model discovery, scanning, and configuration")
-    .option("--status-json", "Output JSON (alias for `models status --json`)", false)
-    .option("--status-plain", "Plain output (alias for `models status --plain`)", false)
+    .description("模型发现、扫描和配置")
+    .option("--status-json", "输出 JSON (等同于 `models status --json`)", false)
+    .option("--status-plain", "纯文本输出 (等同于 `models status --plain`)", false)
     .option(
       "--agent <id>",
-      "Agent id to inspect (overrides OPENCLAW_AGENT_DIR/PI_CODING_AGENT_DIR)",
+      "要检查的 Agent ID (覆盖 OPENCLAW_AGENT_DIR/PI_CODING_AGENT_DIR)",
     )
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/models", "docs.openclaw.ai/cli/models")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/models", "docs.openclaw.ai/zh-CN/cli/models")}\n`,
     );
 
   models
     .command("list")
-    .description("List models (configured by default)")
-    .option("--all", "Show full model catalog", false)
-    .option("--local", "Filter to local models", false)
-    .option("--provider <name>", "Filter by provider")
-    .option("--json", "Output JSON", false)
-    .option("--plain", "Plain line output", false)
+    .description("列出模型 (默认显示已配置的模型)")
+    .option("--all", "显示完整模型目录", false)
+    .option("--local", "仅显示本地模型", false)
+    .option("--provider <name>", "按提供商过滤")
+    .option("--json", t('gateway.options.jsonOutput'), false)
+    .option("--plain", "纯文本行输出", false)
     .action(async (opts) => {
       await runModelsCommand(async () => {
         await modelsListCommand(opts, defaultRuntime);
@@ -65,31 +66,31 @@ export function registerModelsCli(program: Command) {
 
   models
     .command("status")
-    .description("Show configured model state")
-    .option("--json", "Output JSON", false)
-    .option("--plain", "Plain output", false)
+    .description("显示已配置的模型状态")
+    .option("--json", t('gateway.options.jsonOutput'), false)
+    .option("--plain", "纯文本输出", false)
     .option(
       "--check",
-      "Exit non-zero if auth is expiring/expired (1=expired/missing, 2=expiring)",
+      "如果认证已过期/即将过期则非零退出 (1=已过期/缺失, 2=即将过期)",
       false,
     )
-    .option("--probe", "Probe configured provider auth (live)", false)
-    .option("--probe-provider <name>", "Only probe a single provider")
+    .option("--probe", "探测已配置的提供商认证 (实时)", false)
+    .option("--probe-provider <name>", "仅探测单个提供商")
     .option(
       "--probe-profile <id>",
-      "Only probe specific auth profile ids (repeat or comma-separated)",
+      "仅探测特定的认证 Profile ID (可重复或逗号分隔)",
       (value, previous) => {
         const next = Array.isArray(previous) ? previous : previous ? [previous] : [];
         next.push(value);
         return next;
       },
     )
-    .option("--probe-timeout <ms>", "Per-probe timeout in ms")
-    .option("--probe-concurrency <n>", "Concurrent probes")
-    .option("--probe-max-tokens <n>", "Probe max tokens (best-effort)")
+    .option("--probe-timeout <ms>", "每次探测超时时间 (毫秒)")
+    .option("--probe-concurrency <n>", "并发探测数")
+    .option("--probe-max-tokens <n>", "探测最大 Token 数 (尽力而为)")
     .option(
       "--agent <id>",
-      "Agent id to inspect (overrides OPENCLAW_AGENT_DIR/PI_CODING_AGENT_DIR)",
+      "要检查的 Agent ID (覆盖 OPENCLAW_AGENT_DIR/PI_CODING_AGENT_DIR)",
     )
     .action(async (opts, command) => {
       const agent =
@@ -115,8 +116,8 @@ export function registerModelsCli(program: Command) {
 
   models
     .command("set")
-    .description("Set the default model")
-    .argument("<model>", "Model id or alias")
+    .description("设置默认模型")
+    .argument("<model>", "模型ID或别名")
     .action(async (model: string) => {
       await runModelsCommand(async () => {
         await modelsSetCommand(model, defaultRuntime);
@@ -125,21 +126,21 @@ export function registerModelsCli(program: Command) {
 
   models
     .command("set-image")
-    .description("Set the image model")
-    .argument("<model>", "Model id or alias")
+    .description("设置图像生成模型")
+    .argument("<model>", "模型ID或别名")
     .action(async (model: string) => {
       await runModelsCommand(async () => {
         await modelsSetImageCommand(model, defaultRuntime);
       });
     });
 
-  const aliases = models.command("aliases").description("Manage model aliases");
+  const aliases = models.command("aliases").description("管理模型别名");
 
   aliases
     .command("list")
-    .description("List model aliases")
-    .option("--json", "Output JSON", false)
-    .option("--plain", "Plain output", false)
+    .description("列出模型别名")
+    .option("--json", t('gateway.options.jsonOutput'), false)
+    .option("--plain", "纯文本输出", false)
     .action(async (opts) => {
       await runModelsCommand(async () => {
         await modelsAliasesListCommand(opts, defaultRuntime);

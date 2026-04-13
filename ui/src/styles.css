@@ -5,6 +5,8 @@
 @import "./styles/chat.css";
 @import "./styles/config.css";
 @import "./styles/usage.css";
+@import "./styles/cjk.css";
+@import "./styles/mobile-cjk.css";
 @import "@create-markdown/preview/themes/system.css";
 
 .cm-preview {

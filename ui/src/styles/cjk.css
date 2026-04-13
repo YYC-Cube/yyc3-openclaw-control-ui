@@ -1,0 +1,425 @@
+/**
+ * CJK Typography & Chinese Localization Styles
+ * 
+ * Optimized for Chinese, Japanese, Korean text rendering
+ * Following W3C CLREQ (Chinese Layout Requirements)
+ * 
+ * Features:
+ * - CJK-optimized font stack
+ * - Proper line-height for CJK characters
+ * - Text indentation rules
+ * - Punctuation handling
+ * - Mixed CJK/Latin text spacing
+ * - RTL support preparation
+ */
+
+/* =============================================
+   CJK FONT STACKS
+   ============================================= */
+
+:root {
+  /* Primary CJK Font Stack - Simplified Chinese */
+  --font-cjk-sc: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei",
+    "Noto Sans SC", "Source Han Sans SC", sans-serif;
+
+  /* Traditional Chinese */
+  --font-cjk-tc: "PingFang TC", "Hiragino Sans TC", "Microsoft JhengHei",
+    "Noto Sans TC", "Source Han Sans TC", sans-serif;
+
+  /* Japanese */
+  --font-cjk-jp: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo",
+    "Noto Sans JP", "Source Han Sans JP", sans-serif;
+
+  /* Korean */
+  --font-cjk-kr: "Apple SD Gothic Neo", "Malgun Gothic", "Nanum Gothic",
+    "Noto Sans KR", "Source Han Sans KR", sans-serif;
+
+  /* Default CJK font (auto-detect based on locale) */
+  --font-cjk: var(--font-cjk-sc);
+
+  /* CJK-specific typography */
+  --cjk-line-height: 1.75;
+  --cjk-line-height-loose: 2;
+  --cjk-line-height-tight: 1.5;
+  
+  /* CJK character width reference (em-based) */
+  --cjk-char-width: 1em;
+  
+  /* Punctuation adjustment */
+  --cjk-punctuation-spacing: 0.25em;
+  
+  /* Paragraph indentation (2 em for Chinese) */
+  --cjk-paragraph-indent: 2em;
+}
+
+/* Apply CJK fonts when locale is Chinese */
+[lang="zh-CN"],
+[lang="zh-TW"],
+[lang="zh-Hans"],
+[lang="zh-Hant"] {
+  --font-body: var(--font-cjk), var(--font-body);
+  --font-display: var(--font-cjk), var(--font-display);
+}
+
+/* =============================================
+   BASE TYPOGRAPHY OVERRIDES FOR CJK
+   ============================================= */
+
+html[lang^="zh"],
+html[lang^="ja"],
+html[lang^="ko"] {
+  /* Optimize text rendering for CJK */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* Enable ligatures for better appearance */
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+/* Body text optimization for CJK */
+body:has([lang^="zh"]),
+body:has([lang^="ja"]),
+body:has([lang^="ko"]) {
+  line-height: var(--cjk-line-height);
+  
+  /* Improve justification for CJK text */
+  text-align: justify;
+  text-justify: inter-ideograph;
+}
+
+/* =============================================
+   PARAGRAPH & TEXT CONTAINERS
+   ============================================= */
+
+/* Chinese paragraph indentation */
+.cjk-paragraph,
+.cjk-text p {
+  text-indent: var(--cjk-paragraph-indent);
+  margin-bottom: 1em;
+}
+
+.cjk-paragraph:first-child,
+.cjk-text p:first-child {
+  text-indent: 0;
+}
+
+/* Remove indentation for specific elements */
+.cjk-text > h1,
+.cjk-text > h2,
+.cjk-text > h3,
+.cjk-text > h4,
+.cjk-text > h5,
+.cjk-text > h6,
+.cjk-text > ul,
+.cjk-text > ol,
+.cjk-text > blockquote,
+.cjk-text > pre,
+.cjk-text > table,
+.cjk-text > figure {
+  text-indent: 0;
+}
+
+/* =============================================
+   PUNCTUATION HANDLING
+   ============================================= */
+
+/* Hanging punctuation at line start (Chinese typesetting) */
+.cjk-text {
+  hanging-punctuation: first last allow-end;
+  
+  /* Prevent widows and orphans in CJK text */
+  widow-control: auto;
+  orphans: 3;
+  widows: 3;
+}
+
+/* CJK punctuation marks - prevent line break before */
+.cjk-punct-before {
+  white-space: nowrap;
+}
+
+/* Common CJK full-width punctuation that shouldn't start a line */
+.cjk-no-break-start::before,
+.cjk-text::before {
+  content: none;
+}
+
+/* =============================================
+   MIXED CJK/LATIN SPACING
+   ============================================= */
+
+/* Add small space between CJK and Latin characters */
+.cjk-mixed-text {
+  text-spacing: space-start space-end;
+}
+
+/* Automatic spacing for mixed content (when supported) */
+@supports (text-spacing: trim-start) {
+  .cjk-mixed-text {
+    text-spacing: trim-start trim-end space-start space-end allow-end;
+  }
+}
+
+/* Manual spacing fallback using pseudo-elements */
+.cjk-latinspace + .cjk-cjkspace,
+.cjk-cjkspace + .cjk-latinspace {
+  margin-inline: 0.25em;
+}
+
+/* =============================================
+   LINE BREAKING RULES FOR CJK
+   ============================================= */
+
+/* Prevent breaks in certain situations */
+.cjk-no-break {
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
+/* Allow breaks at any CJK character boundary (default) */
+.cjk-break-all {
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+
+/* Smart breaking for URLs and code */
+.cjk-url,
+.cjk-code {
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+
+/* Ruby annotation support (Japanese furigana) */
+ruby {
+  ruby-position: over;
+  ruby-align: center;
+  font-size: 0.6em;
+  line-height: 1;
+}
+
+rt {
+  font-size: inherit;
+  color: var(--muted);
+}
+
+/* =============================================
+   VERTICAL WRITING MODE SUPPORT
+   ============================================= */
+
+.cjk-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.cjk-vertical-ltr {
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+}
+
+/* =============================================
+   NUMBER & LIST STYLING FOR CJK
+   ============================================= */
+
+/* Chinese numbering styles */
+.cjk-list-traditional {
+  list-style-type: cjk-ideographic;
+}
+
+.cjk-list-circle {
+  list-style-type: circle;
+}
+
+/* Counter styling with CJK numerals */
+ol.cjk-counter-upper {
+  list-style-type: upper-alpha;
+}
+
+ol.cjk-counter-lower {
+  list-style-type: lower-alpha;
+}
+
+/* =============================================
+   FORM INPUT OPTIMIZATION FOR CJK
+   ============================================= */
+
+/* Wider inputs for CJK text input */
+input[type="text"][lang^="zh"],
+input[type="search"][lang^="zh"],
+textarea[lang^="zh"] {
+  /* CJK characters are wider, so adjust min-width */
+  min-width: 12em;
+  
+  /* Use full-width IME composition */
+  ime-mode: active;
+}
+
+/* Placeholder text styling */
+input::placeholder[lang^="zh"],
+textarea::placeholder[lang^="zh"] {
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+/* =============================================
+   CODE & TECHNICAL CONTENT IN CJK CONTEXT
+   ============================================= */
+
+/* Inline code within CJK text */
+.cjk-text code {
+  font-family: var(--mono);
+  background: rgba(0, 0, 0, 0.08);
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+  font-size: 0.9em;
+  
+  /* Add slight spacing around Latin code in CJK context */
+  margin: 0 0.1em;
+}
+
+/* Pre-formatted blocks */
+.cjk-text pre {
+  font-family: var(--mono);
+  line-height: 1.5; /* Tighter for code */
+  tab-size: 2;
+}
+
+/* =============================================
+   TABLE STYLING FOR CJK
+   ============================================= */
+
+.cjk-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cjk-table th,
+.cjk-table td {
+  padding: 0.75em 1em;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.cjk-table th {
+  font-weight: 600;
+  background: var(--bg-accent);
+}
+
+/* =============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================= */
+
+/* Mobile optimizations for CJK */
+@media (max-width: 768px) {
+  :root {
+    --cjk-line-height: 1.65;
+    --cjk-paragraph-indent: 1.5em;
+  }
+  
+  /* Slightly smaller font size on mobile for CJK */
+  html[lang^="zh"] body,
+  html[lang^="ja"] body,
+  html[lang^="ko"] body {
+    font-size: 15px;
+  }
+  
+  /* Reduce paragraph indent on mobile */
+  .cjk-paragraph,
+  .cjk-text p {
+    text-indent: var(--cjk-paragraph-indent);
+  }
+}
+
+/* Print optimizations */
+@media print {
+  .cjk-text {
+    line-height: var(--cjk-line-height-loose);
+  }
+  
+  /* Ensure proper pagination for CJK */
+  .cjk-page-break {
+    page-break-after: always;
+  }
+}
+
+/* =============================================
+   ACCESSIBILITY ENHANCEMENTS
+   ============================================= */
+
+/* Focus visible enhancement for CJK context */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+  .cjk-text {
+    forced-color-adjust: auto;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =============================================
+   UTILITY CLASSES
+   ============================================= */
+
+/* Text alignment utilities */
+.cjk-text-left { text-align: left; }
+.cjk-text-center { text-align: center; }
+.cjk-text-right { text-align: right; }
+.cjk-text-justify { text-align: justify; }
+
+/* Font weight utilities for CJK */
+.cjk-light { font-weight: 300; }
+.cjk-regular { font-weight: 400; }
+.cjk-medium { font-weight: 500; }
+.cjk-semibold { font-weight: 600; }
+.cjk-bold { font-weight: 700; }
+
+/* Line height utilities */
+.cjk-leading-tight { line-height: var(--cjk-line-height-tight); }
+.cjk-leading-normal { line-height: var(--cjk-line-height); }
+.cjk-leading-loose { line-height: var(--cjk-line-height-loose); }
+
+/* Spacing utilities */
+.cjk-space-xs { margin: 0.25em; }
+.cjk-space-sm { margin: 0.5em; }
+.cjk-space-md { margin: 1em; }
+.cjk-space-lg { margin: 1.5em; }
+.cjk-space-xl { margin: 2em; }
+
+/* Truncation utilities */
+.cjk-truncate-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cjk-truncate-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cjk-truncate-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

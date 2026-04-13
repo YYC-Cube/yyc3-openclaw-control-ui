@@ -10,7 +10,7 @@ import { theme } from "../terminal/theme.js";
 const DEFAULT_DELAY_MS = 0;
 let activeProgress = 0;
 
-type ProgressOptions = {
+export type ProgressOptions = {
   label: string;
   indeterminate?: boolean;
   total?: number;

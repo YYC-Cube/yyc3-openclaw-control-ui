@@ -1,0 +1,533 @@
+/**
+ * Mobile Chinese Experience Enhancement
+ * 
+ * Optimizations for iOS/Android terminals and mobile browsers
+ * Focus on CJK text rendering, touch targets, and readability
+ */
+
+/* =============================================
+   MOBILE CJK OPTIMIZATIONS
+   ============================================= */
+
+@media (max-width: 768px) {
+  
+  /* =============================================
+     VIEWPORT & SCALING
+     ============================================= */
+  
+  html {
+    /* Prevent zoom on input focus (iOS) */
+    -webkit-text-size-adjust: 100%;
+    
+    /* Improve font rendering on mobile */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* =============================================
+     TYPOGRAPHY FOR MOBILE CJK
+     ============================================= */
+  
+  body {
+    /* Slightly larger base font for CJK on mobile */
+    font-size: 16px;
+    line-height: 1.65;
+    
+    /* Prevent horizontal scroll */
+    overflow-x: hidden;
+    
+    /* Smooth scrolling */
+    scroll-behavior: smooth;
+  }
+  
+  /* Chinese locale-specific adjustments */
+  html[lang^="zh"] body,
+  html[lang^="ja"] body,
+  html[lang^="ko"] body {
+    font-size: 16px; /* Prevent auto-zoom on iOS */
+    line-height: 1.7;
+  }
+  
+  /* =============================================
+     TOUCH TARGETS (WCAG 2.1 compliant)
+     Minimum size: 44x44 CSS pixels
+     ============================================= */
+  
+  /* Buttons */
+  button,
+  .btn,
+  [role="button"],
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"] {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 10px 16px;
+    
+    /* Touch feedback */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  
+  /* Links in content */
+  .content a,
+  .chat-text a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 0;
+  }
+  
+  /* Form inputs */
+  input[type="text"],
+  input[type="search"],
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"],
+  input[type="url"],
+  select,
+  textarea {
+    min-height: 44px;
+    font-size: 16px; /* Prevent iOS zoom */
+    padding: 12px;
+  }
+  
+  /* Checkbox and radio labels */
+  label {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 0;
+  }
+  
+  /* =============================================
+     NAVIGATION & SIDEBAR (MOBILE)
+     ============================================= */
+  
+  /* Sidebar drawer for CJK text */
+  .shell-nav {
+    /* Wider sidebar for CJK characters */
+    width: min(85vw, 340px);
+  }
+  
+  /* Nav items with CJK text */
+  .nav-item,
+  .sidebar-item {
+    min-height: 48px;
+    padding: 12px 16px;
+    
+    /* Better spacing for CJK */
+    line-height: 1.5;
+  }
+  
+  /* Nav text sizing */
+  .nav-item-text,
+  .sidebar-label {
+    font-size: 15px;
+    font-weight: 500;
+  }
+  
+  /* =============================================
+     CHAT INTERFACE (MOBILE)
+     ============================================= */
+  
+  /* Chat container */
+  .chat-container {
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile browsers */
+  }
+  
+  /* Chat messages */
+  .chat-message {
+    max-width: 90%;
+    margin-bottom: 16px;
+    padding: 12px 14px;
+  }
+  
+  /* Chat text optimization for CJK */
+  .chat-text {
+    font-size: 15px;
+    line-height: 1.75;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  /* Input area */
+  .chat-input-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 12px 16px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    
+    /* Handle virtual keyboard */
+    transition: transform 0.3s ease;
+  }
+  
+  .chat-input-container.keyboard-open {
+    transform: translateY(0);
+  }
+  
+  /* Textarea for CJK input */
+  .chat-input {
+    min-height: 44px;
+    max-height: 120px;
+    font-size: 16px;
+    line-height: 1.5;
+    resize: none;
+    
+    /* IME composition support */
+    ime-mode: active;
+  }
+  
+  /* Send button */
+  .chat-send-button {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    margin-left: 8px;
+  }
+  
+  /* =============================================
+     TABLE VIEWS (MOBILE)
+     ============================================= */
+  
+  /* Horizontal scroll for wide tables */
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -16px;
+    padding: 0 16px;
+  }
+  
+  table {
+    min-width: 600px;
+    font-size: 14px;
+  }
+  
+  th, td {
+    padding: 10px 12px;
+    white-space: nowrap;
+  }
+  
+  /* =============================================
+     CARDS & PANELS (MOBILE)
+     ============================================= */
+  
+  .card,
+  .panel {
+    margin-bottom: 16px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  
+  .card-header,
+  .panel-header {
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  
+  .card-body,
+  .panel-body {
+    padding: 16px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  
+  /* =============================================
+     FORM ELEMENTS (MOBILE CJK)
+     ============================================= */
+  
+  /* Form groups */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-strong);
+    line-height: 1.5;
+  }
+  
+  /* Select dropdowns */
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23838387' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+  }
+  
+  /* Toggle switches */
+  .toggle-switch {
+    width: 52px;
+    height: 32px;
+  }
+  
+  .toggle-slider {
+    width: 28px;
+    height: 28px;
+    top: 2px;
+  }
+  
+  /* =============================================
+     MODALS & DIALOGS (MOBILE)
+     ============================================= */
+  
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  
+  .modal-content {
+    width: 100%;
+    max-height: 90vh;
+    max-height: 90dvh;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    animation: slide-up 0.3s ease;
+  }
+  
+  @keyframes slide-up {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  
+  .modal-header {
+    padding: 20px 20px 16px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+    
+    /* Drag handle for bottom sheet */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .modal-drag-handle {
+    width: 36px;
+    height: 5px;
+    background: var(--border-strong);
+    border-radius: 3px;
+    margin-bottom: 16px;
+  }
+  
+  .modal-body {
+    padding: 0 20px 20px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    max-height: 60vh;
+  }
+  
+  .modal-footer {
+    padding: 16px 20px;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 12px;
+  }
+  
+  .modal-footer button {
+    flex: 1;
+    min-height: 50px;
+  }
+  
+  /* =============================================
+     TABS & NAVIGATION (MOBILE)
+     ============================================= */
+  
+  .tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--chrome);
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0;
+    padding-bottom: calc(8px + env(safe-area-inset-bottom));
+    z-index: 90;
+  }
+  
+  .tab-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-height: 56px;
+    padding: 8px 0;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+  
+  .tab-item.active {
+    color: var(--accent);
+  }
+  
+  .tab-icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* =============================================
+     GESTURE & INTERACTION FEEDBACK
+     ============================================= */
+  
+  /* Ripple effect for touch */
+  .ripple {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .ripple::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease;
+  }
+  
+  .ripple:active::after {
+    width: 200%;
+    height: 200%;
+  }
+  
+  /* Active state feedback */
+  .touch-feedback:active {
+    opacity: 0.7;
+    transform: scale(0.98);
+    transition: all 0.1s ease;
+  }
+  
+  /* =============================================
+     SAFE AREA NOTCH SUPPORT (iPhone X+)
+     ============================================= */
+  
+  @supports (padding: env(safe-area-inset-top)) {
+    .topbar {
+      padding-top: env(safe-area-inset-top);
+      height: calc(var(--shell-topbar-height) + env(safe-area-inset-top));
+    }
+    
+    .bottom-fixed {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+  }
+  
+  /* =============================================
+     LANDSCAPE MODE ADJUSTMENTS
+     ============================================= */
+  
+  @media (max-width: 900px) and (orientation: landscape) {
+    .chat-input-container {
+      max-height: 40vh;
+    }
+    
+    .modal-content {
+      max-height: 95vh;
+      max-width: 90vw;
+      margin: auto;
+      border-radius: var(--radius-xl);
+    }
+    
+    .tab-bar {
+      display: none; /* Hide tab bar in landscape */
+    }
+  }
+  
+  /* =============================================
+     DARK MODE ENHANCEMENTS FOR MOBILE
+     ============================================= */
+  
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #000;
+      color: #fff;
+    }
+    
+    /* Reduce blue light emission */
+    .night-mode {
+      filter: brightness(0.9) sepia(0.1);
+    }
+  }
+}
+
+/* =============================================
+   PLATFORM-SPECIFIC FIXES
+   ============================================= */
+
+/* iOS Safari specific */
+@supports (-webkit-touch-callout: none) {
+  /* Fix input zoom on focus */
+  input[type="text"],
+  input[type="search"],
+  textarea {
+    font-size: 16px !important;
+  }
+  
+  /* Smooth scrolling */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Remove tap highlight */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Chrome Android specific */
+@supports not (-webkit-touch-callout: none) {
+  /* Custom scrollbar for Android */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+  }
+}
+
+/* =============================================
+   PRINT STYLES FOR MOBILE
+   ============================================= */
+
+@media print and (max-width: 768px) {
+  body {
+    font-size: 12pt;
+    line-height: 1.6;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+}

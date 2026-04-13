@@ -96,9 +96,9 @@ describe("mattermost reactions", () => {
       fetchImpl: fetchMock,
     });
 
-    const usersMeCalls = fetchMock.mock.calls.filter((call) =>
+    const usersMeCalls = (fetchMock as any).mock?.calls?.filter((call: any[]) =>
       String(call[0]).endsWith("/api/v4/users/me"),
-    );
+    ) || [];
     expect(addResult).toEqual({ ok: true });
     expect(removeResult).toEqual({ ok: true });
     expect(usersMeCalls).toHaveLength(1);

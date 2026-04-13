@@ -113,8 +113,8 @@ describe("brave web search provider", () => {
         ok: true,
         json: async () => ({ web: { results: [] } }),
       } as Response;
-    });
-    global.fetch = mockFetch as typeof global.fetch;
+    }) as unknown as typeof fetch;
+    global.fetch = mockFetch as unknown as typeof global.fetch;
 
     const provider = createBraveWebSearchProvider();
     const tool = provider.createTool({
@@ -133,7 +133,7 @@ describe("brave web search provider", () => {
       country: "VN",
     });
 
-    const requestUrl = new URL(String(mockFetch.mock.calls[0]?.[0]));
+    const requestUrl = new URL(String((mockFetch as any).mock?.calls[0]?.[0]));
     expect(requestUrl.searchParams.get("country")).toBe("ALL");
   });
 });

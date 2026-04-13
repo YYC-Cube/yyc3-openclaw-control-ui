@@ -24,7 +24,7 @@ function createMockFetch(response?: { status?: number; body?: unknown; contentTy
     });
   });
 
-  return { mockFetch: mockFetch as typeof fetch, calls };
+  return { mockFetch: mockFetch as unknown as typeof fetch, calls };
 }
 
 function createTestClient(response?: { status?: number; body?: unknown; contentType?: string }) {
@@ -131,9 +131,9 @@ describe("createMattermostClient", () => {
   });
 
   it("returns undefined on 204 responses", async () => {
-    const fetchImpl = vi.fn<typeof fetch>(async () => {
+    const fetchImpl = vi.fn(async () => {
       return new Response(null, { status: 204 });
-    });
+    }) as unknown as typeof fetch;
     const client = createMattermostClient({
       baseUrl: "https://chat.example.com",
       botToken: "test-token",

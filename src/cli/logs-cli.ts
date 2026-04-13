@@ -9,6 +9,7 @@ import { createSafeStreamWriter } from "../terminal/stream-writer.js";
 import { colorize, isRich, theme } from "../terminal/theme.js";
 import { formatCliCommand } from "./command-format.js";
 import { addGatewayClientOptions, callGatewayFromCli } from "./gateway-rpc.js";
+import { t } from "../i18n/index.js";
 
 type LogsTailPayload = {
   file?: string;
@@ -192,19 +193,19 @@ function emitGatewayError(
 export function registerLogsCli(program: Command) {
   const logs = program
     .command("logs")
-    .description("Tail gateway file logs via RPC")
-    .option("--limit <n>", "Max lines to return", "200")
-    .option("--max-bytes <n>", "Max bytes to read", "250000")
-    .option("--follow", "Follow log output", false)
-    .option("--interval <ms>", "Polling interval in ms", "1000")
-    .option("--json", "Emit JSON log lines", false)
-    .option("--plain", "Plain text output (no ANSI styling)", false)
-    .option("--no-color", "Disable ANSI colors")
-    .option("--local-time", "Display timestamps in local timezone", false)
+    .description("通过 RPC 查看网关日志文件")
+    .option("--limit <n>", "最大返回行数", "200")
+    .option("--max-bytes <n>", "最大读取字节数", "250000")
+    .option("--follow", "持续跟踪日志输出", false)
+    .option("--interval <ms>", "轮询间隔 (毫秒)", "1000")
+    .option("--json", "输出 JSON 格式日志行", false)
+    .option("--plain", "纯文本输出 (无 ANSI 样式)", false)
+    .option("--no-color", "禁用 ANSI 颜色")
+    .option("--local-time", "以本地时区显示时间戳", false)
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/logs", "docs.openclaw.ai/cli/logs")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/logs", "docs.openclaw.ai/zh-CN/cli/logs")}\n`,
     );
 
   addGatewayClientOptions(logs);

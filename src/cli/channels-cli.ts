@@ -8,6 +8,7 @@ import { formatCliChannelOptions } from "./channel-options.js";
 import { runCommandWithRuntime } from "./cli-utils.js";
 import { hasExplicitOptions } from "./command-options.js";
 import { formatHelpExamples } from "./help-format.js";
+import { t } from "../i18n/index.js";
 
 const optionNamesAdd = [
   "channel",
@@ -64,29 +65,29 @@ export function registerChannelsCli(program: Command) {
   const channelNames = formatCliChannelOptions();
   const channels = program
     .command("channels")
-    .description("Manage connected chat channels and accounts")
+    .description(t('channels.description'))
     .addHelpText(
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["openclaw channels list", "List configured channels and auth profiles."],
-          ["openclaw channels status --probe", "Run channel status checks and probes."],
+          ["openclaw channels list", t('channels.list.description')],
+          ["openclaw channels status --probe", "运行渠道状态检查和探测"],
           [
             "openclaw channels add --channel telegram --token <token>",
-            "Add or update a channel account non-interactively.",
+            "非交互式添加或更新渠道账号",
           ],
-          ["openclaw channels login --channel whatsapp", "Link a WhatsApp Web account."],
+          ["openclaw channels login --channel whatsapp", "关联 WhatsApp Web 账号"],
         ])}\n\n${theme.muted("Docs:")} ${formatDocsLink(
           "/cli/channels",
-          "docs.openclaw.ai/cli/channels",
+          "docs.openclaw.ai/zh-CN/cli/channels",
         )}\n`,
     );
 
   channels
     .command("list")
-    .description("List configured channels + auth profiles")
-    .option("--no-usage", "Skip model provider usage/quota snapshots")
-    .option("--json", "Output JSON", false)
+    .description(t('channels.list.description'))
+    .option("--no-usage", "跳过模型提供商使用量/配额快照")
+    .option("--json", t('gateway.options.jsonOutput'), false)
     .action(async (opts) => {
       await runChannelsCommand(async () => {
         const { channelsListCommand } = await import("../commands/channels.js");
@@ -96,10 +97,10 @@ export function registerChannelsCli(program: Command) {
 
   channels
     .command("status")
-    .description("Show gateway channel status (use status --deep for local)")
-    .option("--probe", "Probe channel credentials", false)
-    .option("--timeout <ms>", "Timeout in ms", "10000")
-    .option("--json", "Output JSON", false)
+    .description(t('channels.status.description'))
+    .option("--probe", t('channels.connect.argType'), false)
+    .option("--timeout <ms>", "超时时间 (毫秒)", "10000")
+    .option("--json", t('gateway.options.jsonOutput'), false)
     .action(async (opts) => {
       await runChannelsCommand(async () => {
         const { channelsStatusCommand } = await import("../commands/channels.js");
@@ -109,12 +110,12 @@ export function registerChannelsCli(program: Command) {
 
   channels
     .command("capabilities")
-    .description("Show provider capabilities (intents/scopes + supported features)")
-    .option("--channel <name>", `Channel (${formatCliChannelOptions(["all"])})`)
-    .option("--account <id>", "Account id (only with --channel)")
-    .option("--target <dest>", "Channel target for permission audit (Discord channel:<id>)")
-    .option("--timeout <ms>", "Timeout in ms", "10000")
-    .option("--json", "Output JSON", false)
+    .description("显示提供商能力 (意图/范围 + 支持的功能)")
+    .option("--channel <name>", `渠道 (${formatCliChannelOptions(["all"])})`)
+    .option("--account <id>", "账号ID (仅与 --channel 配合使用)")
+    .option("--target <dest>", "权限审计的渠道目标 (Discord channel:<id>)")
+    .option("--timeout <ms>", "超时时间 (毫秒)", "10000")
+    .option("--json", t('gateway.options.jsonOutput'), false)
     .action(async (opts) => {
       await runChannelsCommand(async () => {
         const { channelsCapabilitiesCommand } = await import("../commands/channels.js");
@@ -124,12 +125,12 @@ export function registerChannelsCli(program: Command) {
 
   channels
     .command("resolve")
-    .description("Resolve channel/user names to IDs")
-    .argument("<entries...>", "Entries to resolve (names or ids)")
-    .option("--channel <name>", `Channel (${channelNames})`)
-    .option("--account <id>", "Account id (accountId)")
-    .option("--kind <kind>", "Target kind (auto|user|group)", "auto")
-    .option("--json", "Output JSON", false)
+    .description("解析渠道/用户名称到ID")
+    .argument("<entries...>", "要解析的条目 (名称或ID)")
+    .option("--channel <name>", `渠道 (${channelNames})`)
+    .option("--account <id>", "账号ID (accountId)")
+    .option("--kind <kind>", "目标类型 (auto|user|group)", "auto")
+    .option("--json", t('gateway.options.jsonOutput'), false)
     .action(async (entries, opts) => {
       await runChannelsCommand(async () => {
         const { channelsResolveCommand } = await import("../commands/channels.js");
@@ -148,10 +149,10 @@ export function registerChannelsCli(program: Command) {
 
   channels
     .command("logs")
-    .description("Show recent channel logs from the gateway log file")
-    .option("--channel <name>", `Channel (${formatCliChannelOptions(["all"])})`, "all")
-    .option("--lines <n>", "Number of lines (default: 200)", "200")
-    .option("--json", "Output JSON", false)
+    .description("显示网关日志文件中的最近渠道日志")
+    .option("--channel <name>", `渠道 (${formatCliChannelOptions(["all"])})`, "all")
+    .option("--lines <n>", "显示行数 (默认: 200)", "200")
+    .option("--json", t('gateway.options.jsonOutput'), false)
     .action(async (opts) => {
       await runChannelsCommand(async () => {
         const { channelsLogsCommand } = await import("../commands/channels.js");
@@ -161,43 +162,43 @@ export function registerChannelsCli(program: Command) {
 
   channels
     .command("add")
-    .description("Add or update a channel account")
-    .option("--channel <name>", `Channel (${channelNames})`)
-    .option("--account <id>", "Account id (default when omitted)")
-    .option("--name <name>", "Display name for this account")
-    .option("--token <token>", "Bot token (Telegram/Discord)")
-    .option("--private-key <key>", "Nostr private key (nsec... or hex)")
-    .option("--token-file <path>", "Bot token file (Telegram)")
-    .option("--bot-token <token>", "Slack bot token (xoxb-...)")
-    .option("--app-token <token>", "Slack app token (xapp-...)")
-    .option("--signal-number <e164>", "Signal account number (E.164)")
-    .option("--cli-path <path>", "CLI path (signal-cli or imsg)")
-    .option("--db-path <path>", "iMessage database path")
-    .option("--service <service>", "iMessage service (imessage|sms|auto)")
-    .option("--region <region>", "iMessage region (for SMS)")
-    .option("--auth-dir <path>", "WhatsApp auth directory override")
-    .option("--http-url <url>", "Signal HTTP daemon base URL")
-    .option("--http-host <host>", "Signal HTTP host")
-    .option("--http-port <port>", "Signal HTTP port")
-    .option("--webhook-path <path>", "Webhook path (Google Chat/BlueBubbles)")
-    .option("--webhook-url <url>", "Google Chat webhook URL")
-    .option("--audience-type <type>", "Google Chat audience type (app-url|project-number)")
-    .option("--audience <value>", "Google Chat audience value (app URL or project number)")
-    .option("--homeserver <url>", "Matrix homeserver URL")
-    .option("--user-id <id>", "Matrix user ID")
-    .option("--access-token <token>", "Matrix access token")
-    .option("--password <password>", "Matrix password")
-    .option("--device-name <name>", "Matrix device name")
-    .option("--initial-sync-limit <n>", "Matrix initial sync limit")
-    .option("--ship <ship>", "Tlon ship name (~sampel-palnet)")
-    .option("--url <url>", "Tlon ship URL")
-    .option("--relay-urls <list>", "Nostr relay URLs (comma-separated)")
-    .option("--code <code>", "Tlon login code")
-    .option("--group-channels <list>", "Tlon group channels (comma-separated)")
-    .option("--dm-allowlist <list>", "Tlon DM allowlist (comma-separated ships)")
-    .option("--auto-discover-channels", "Tlon auto-discover group channels")
-    .option("--no-auto-discover-channels", "Disable Tlon auto-discovery")
-    .option("--use-env", "Use env token (default account only)", false)
+    .description("添加或更新渠道账号")
+    .option("--channel <name>", `渠道 (${channelNames})`)
+    .option("--account <id>", "账号ID (省略时使用默认)")
+    .option("--name <name>", "此账号的显示名称")
+    .option("--token <token>", "机器人Token (Telegram/Discord)")
+    .option("--private-key <key>", "Nostr私钥 (nsec... 或 hex)")
+    .option("--token-file <path>", "机器人Token文件 (Telegram)")
+    .option("--bot-token <token>", "Slack机器人Token (xoxb-...)")
+    .option("--app-token <token>", "Slack应用Token (xapp-...)")
+    .option("--signal-number <e164>", "Signal账号号码 (E.164格式)")
+    .option("--cli-path <path>", "CLI路径 (signal-cli 或 imsg)")
+    .option("--db-path <path>", "iMessage数据库路径")
+    .option("--service <service>", "iMessage服务类型 (imessage|sms|auto)")
+    .option("--region <region>", "iMessage区域 (用于SMS)")
+    .option("--auth-dir <path>", "WhatsApp认证目录覆盖")
+    .option("--http-url <url>", "Signal HTTP守护进程基础URL")
+    .option("--http-host <host>", "Signal HTTP主机")
+    .option("--http-port <port>", "Signal HTTP端口")
+    .option("--webhook-path <path>", "Webhook路径 (Google Chat/BlueBubbles)")
+    .option("--webhook-url <url>", "Google Chat Webhook URL")
+    .option("--audience-type <type>", "Google Chat受众类型 (app-url|project-number)")
+    .option("--audience <value>", "Google Chat受众值 (应用URL或项目编号)")
+    .option("--homeserver <url>", "Matrix服务器URL")
+    .option("--user-id <id>", "Matrix用户ID")
+    .option("--access-token <token>", "Matrix访问令牌")
+    .option("--password <password>", "Matrix密码")
+    .option("--device-name <name>", "Matrix设备名称")
+    .option("--initial-sync-limit <n>", "Matrix初始同步限制")
+    .option("--ship <ship>", "Tlon飞船名称 (~sampel-palnet)")
+    .option("--url <url>", "Tlon飞船URL")
+    .option("--relay-urls <list>", "Nostr中继URL列表 (逗号分隔)")
+    .option("--code <code>", "Tlon登录代码")
+    .option("--group-channels <list>", "Tlon群组频道列表 (逗号分隔)")
+    .option("--dm-allowlist <list>", "Tlon DM白名单列表 (逗号分隔的飞船)")
+    .option("--auto-discover-channels", "Tlon自动发现群组频道")
+    .option("--no-auto-discover-channels", "禁用Tlon自动发现")
+    .option("--use-env", "使用环境变量Token (仅默认账号)", false)
     .action(async (opts, command) => {
       await runChannelsCommand(async () => {
         const { channelsAddCommand } = await import("../commands/channels.js");
@@ -208,10 +209,10 @@ export function registerChannelsCli(program: Command) {
 
   channels
     .command("remove")
-    .description("Disable or delete a channel account")
-    .option("--channel <name>", `Channel (${channelNames})`)
-    .option("--account <id>", "Account id (default when omitted)")
-    .option("--delete", "Delete config entries (no prompt)", false)
+    .description("禁用或删除渠道账号")
+    .option("--channel <name>", `渠道 (${channelNames})`)
+    .option("--account <id>", "账号ID (省略时使用默认)")
+    .option("--delete", "删除配置条目 (无提示)", false)
     .action(async (opts, command) => {
       await runChannelsCommand(async () => {
         const { channelsRemoveCommand } = await import("../commands/channels.js");
@@ -222,10 +223,10 @@ export function registerChannelsCli(program: Command) {
 
   channels
     .command("login")
-    .description("Link a channel account (if supported)")
-    .option("--channel <channel>", "Channel alias (auto when only one is configured)")
-    .option("--account <id>", "Account id (accountId)")
-    .option("--verbose", "Verbose connection logs", false)
+    .description(t('channels.connect.description'))
+    .option("--channel <channel>", "渠道别名 (仅配置一个时自动选择)")
+    .option("--account <id>", "账号ID (accountId)")
+    .option("--verbose", "详细连接日志", false)
     .action(async (opts) => {
       await runChannelsCommandWithDanger(async () => {
         await runChannelLogin(
@@ -236,14 +237,14 @@ export function registerChannelsCli(program: Command) {
           },
           defaultRuntime,
         );
-      }, "Channel login failed");
+      }, t('channels.disconnect.confirm'));
     });
 
   channels
     .command("logout")
-    .description("Log out of a channel session (if supported)")
-    .option("--channel <channel>", "Channel alias (auto when only one is configured)")
-    .option("--account <id>", "Account id (accountId)")
+    .description(t('channels.disconnect.description'))
+    .option("--channel <channel>", "渠道别名 (仅配置一个时自动选择)")
+    .option("--account <id>", "账号ID (accountId)")
     .action(async (opts) => {
       await runChannelsCommandWithDanger(async () => {
         await runChannelLogout(
@@ -253,6 +254,6 @@ export function registerChannelsCli(program: Command) {
           },
           defaultRuntime,
         );
-      }, "Channel logout failed");
+      }, "渠道登出失败");
     });
 }

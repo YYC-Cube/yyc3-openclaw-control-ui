@@ -40,6 +40,7 @@ import { formatDocsLink } from "../terminal/links.js";
 import { theme } from "../terminal/theme.js";
 import { shortenHomePath } from "../utils.js";
 import { formatCliCommand } from "./command-format.js";
+import { t } from "../i18n/index.js";
 import type {
   ConfigSetDryRunError,
   ConfigSetDryRunInputMode,
@@ -1308,16 +1309,16 @@ export function registerConfigCli(program: Command) {
   const cmd = program
     .command("config")
     .description(
-      "Non-interactive config helpers (get/set/unset/file/schema/validate). Run without subcommand for guided setup.",
+      "非交互式配置助手 (get/set/unset/file/schema/validate)。不带子命令运行可启动引导设置。",
     )
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/config", "docs.openclaw.ai/cli/config")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/config", "docs.openclaw.ai/zh-CN/cli/config")}\n`,
     )
     .option(
       "--section <section>",
-      "Configuration sections for guided setup (repeatable). Use with no subcommand.",
+      "引导设置的配置节 (可重复)。不带子命令时使用。",
       (value: string, previous: string[]) => [...previous, value],
       [] as string[],
     )
@@ -1328,9 +1329,9 @@ export function registerConfigCli(program: Command) {
 
   cmd
     .command("get")
-    .description("Get a config value by dot path")
-    .argument("<path>", "Config path (dot or bracket notation)")
-    .option("--json", "Output JSON", false)
+    .description("通过点路径获取配置值")
+    .argument("<path>", "配置路径 (点号或方括号表示法)")
+    .option("--json", t('gateway.options.jsonOutput'), false)
     .action(async (path: string, opts) => {
       await runConfigGet({ path, json: Boolean(opts.json) });
     });

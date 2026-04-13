@@ -4,6 +4,7 @@ import { isRich, theme } from "../terminal/theme.js";
 import { hasRootVersionAlias } from "./argv.js";
 import { readCliBannerTaglineMode } from "./banner-config-lite.js";
 import { pickTagline, type TaglineMode, type TaglineOptions } from "./tagline.js";
+import { t, getLocale } from "../i18n/index.js";
 
 type BannerOptions = TaglineOptions & {
   argv?: string[];
@@ -55,40 +56,48 @@ export function formatCliBannerLine(version: string, options: BannerOptions = {}
   const commit =
     options.commit ?? resolveCommitHash({ env: options.env, moduleUrl: import.meta.url });
   const commitLabel = commit ?? "unknown";
+  const isChinese = getLocale().startsWith('zh');
+  
+  // 使用 i18n 获取本地化的标题和标语
+  const title = t('banner.title');
+  const localizedTagline = t('banner.tagline');
   const tagline = pickTagline({ ...options, mode: resolveTaglineMode(options) });
+  
+  // 中文环境优先使用本地化标语，否则使用原始tagline
+  const displayTagline = isChinese ? localizedTagline : tagline;
+  
   const rich = options.richTty ?? isRich();
-  const title = "🦞 OpenClaw";
   const prefix = "🦞 ";
   const columns = options.columns ?? process.stdout.columns ?? 120;
   const plainBaseLine = `${title} ${version} (${commitLabel})`;
-  const plainFullLine = tagline ? `${plainBaseLine} — ${tagline}` : plainBaseLine;
+  const plainFullLine = displayTagline ? `${plainBaseLine} — ${displayTagline}` : plainBaseLine;
   const fitsOnOneLine = visibleWidth(plainFullLine) <= columns;
   if (rich) {
     if (fitsOnOneLine) {
-      if (!tagline) {
+      if (!displayTagline) {
         return `${theme.heading(title)} ${theme.info(version)} ${theme.muted(`(${commitLabel})`)}`;
       }
       return `${theme.heading(title)} ${theme.info(version)} ${theme.muted(
         `(${commitLabel})`,
-      )} ${theme.muted("—")} ${theme.accentDim(tagline)}`;
+      )} ${theme.muted("—")} ${theme.accentDim(displayTagline)}`;
     }
     const line1 = `${theme.heading(title)} ${theme.info(version)} ${theme.muted(
       `(${commitLabel})`,
     )}`;
-    if (!tagline) {
+    if (!displayTagline) {
       return line1;
     }
-    const line2 = `${" ".repeat(prefix.length)}${theme.accentDim(tagline)}`;
+    const line2 = `${" ".repeat(prefix.length)}${theme.accentDim(displayTagline)}`;
     return `${line1}\n${line2}`;
   }
   if (fitsOnOneLine) {
     return plainFullLine;
   }
   const line1 = plainBaseLine;
-  if (!tagline) {
+  if (!displayTagline) {
     return line1;
   }
-  const line2 = `${" ".repeat(prefix.length)}${tagline}`;
+  const line2 = `${" ".repeat(prefix.length)}${displayTagline}`;
   return `${line1}\n${line2}`;
 }
 
@@ -102,10 +111,47 @@ const LOBSTER_ASCII = [
   " ",
 ];
 
+const LOBSTER_ASCII_CN = [
+  "╔═══════════════════════════════════════════════════╗",
+  "║                                                   ║",
+  "║   🦞  O p e n C l a w                             ║",
+  "║      你的全能 AI 助手                              ║",
+  "║                                                   ║",
+  "╚═══════════════════════════════════════════════════╝",
+];
+
 export function formatCliBannerArt(options: BannerOptions = {}): string {
   const rich = options.richTty ?? isRich();
+  const isChinese = getLocale().startsWith('zh');
+  const asciiArt = isChinese ? LOBSTER_ASCII_CN : LOBSTER_ASCII;
+
   if (!rich) {
-    return LOBSTER_ASCII.join("\n");
+    return asciiArt.join("\n");
+  }
+
+  if (isChinese) {
+    const coloredCN = asciiArt.map((line) => {
+      if (line.includes("OpenClaw")) {
+        return (
+          theme.muted("║   ") +
+          theme.accent("🦞") +
+          theme.info(" OpenClaw ") +
+          theme.accent("🦞") +
+          theme.muted("  ║")
+        );
+      }
+      if (line.includes("你的全能 AI 助手")) {
+        return (
+          theme.muted("║") +
+          "      " +
+          theme.info("你的全能 AI 助手") +
+          "                              ║"
+        );
+      }
+      return theme.muted(line);
+    });
+
+    return coloredCN.join("\n");
   }
 
   const colorChar = (ch: string) => {

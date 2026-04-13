@@ -14,6 +14,7 @@ import {
   type JsonSchema,
 } from "./config-form.shared.ts";
 import { analyzeConfigSchema, renderConfigForm, SECTION_META } from "./config-form.ts";
+import "../components/language-selector.js";
 
 const BORDER_RADIUS_LABELS: Record<BorderRadiusStop, string> = {
   0: "None",
@@ -605,6 +606,35 @@ function renderAppearanceSection(props: ConfigProps) {
             `,
           )}
         </div>
+      </div>
+
+      <div class="settings-appearance__section">
+        <h3 class="settings-appearance__heading">Language & Region</h3>
+        <p class="settings-appearance__hint">Choose your preferred language for the interface.</p>
+        <div class="settings-language-selector">
+          <language-selector
+            id="app-language-selector"
+            value=${(props as any).locale || "en"}
+            @language-change=${((e: CustomEvent) => {
+              const detail = e.detail;
+              console.log("[OpenClaw] Language changed:", detail.oldValue, "→", detail.newValue);
+              
+              // Save locale preference
+              try {
+                localStorage.setItem("locale", detail.newValue);
+                // Dispatch custom event for app-wide language change
+                window.dispatchEvent(new CustomEvent("locale-change", { 
+                  detail: { locale: detail.newValue } 
+                }));
+              } catch (err) {
+                console.error("[OpenClaw] Failed to save locale preference:", err);
+              }
+            }) as EventListener}
+          ></language-selector>
+        </div>
+        <p class="settings-appearance__hint" style="margin-top: 8px; font-size: 12px; color: var(--text-secondary, #666);">
+          Supports 10 languages including RTL (Arabic). Changes take effect immediately.
+        </p>
       </div>
 
       <div class="settings-appearance__section">
