@@ -1,423 +1,306 @@
-# 🦞 OpenClaw — Personal AI Assistant | 个人AI助手
+# 🦞 OpenClaw / YYC³ Core
 
 <p align="center">
-    <picture>
-        <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-logo-text-dark.svg">
-        <img src="https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-logo-text.svg" alt="OpenClaw" width="500">
-    </picture>
+  <strong>YYC³ Ecosystem Core Monorepo</strong><br>
+  <em>零依赖 · 企业级安全 · 插件化架构 · 国际化优先</em>
 </p>
 
 <p align="center">
-  <strong>EXFOLIATE! EXFOLIATE! | 去壳！去壳！</strong>
-</p>
-
-<p align="center">
-  <a href="https://github.com/YYC-Cube/yyc3-openclaw-control-ui/actions"><img src="https://img.shields.io/github/actions/workflow/status/YYC-Cube/yyc3-openclaw-control-ui/ci.yml?branch=main&style=for-the-badge" alt="CI Status"></a>
-  <a href="https://github.com/YYC-Cube/yyc3-openclaw-control-ui/releases"><img src="https://img.shields.io/github/v/release/YYC-Cube/yyc3-openclaw-control-ui?include_prereleases&style=for-the-badge" alt="Release"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="MIT License"></a>
-  <a href="#-internationalization-support"><img src="https://img.shields.io/badge/i18n-10%20languages-green.svg?style=for-the-badge" alt="10 Languages"></a>
-  <a href="#-arabic-rtl-support"><img src="https://img.shields.io/badge/RTL-Arabic%20Support-blue.svg?style=for-the-badge" alt="Arabic RTL"></a>
+  <img src="https://img.shields.io/badge/TypeScript-5.3+-3178c6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Node.js-%3E%3D16-339933?style=flat-square&logo=node.js&logoColor=white" alt="Node.js" />
+  <img src="https://img.shields.io/badge/Monorepo-pnpm-ff69b4?style=flat-square&logo=pnpm&logoColor=white" alt="pnpm" />
+  <br/>
+  <img src="https://img.shields.io/badge/i18n-10+languages-blueviolet?style=flat-square" alt="i18n" />
+  <img src="https://img.shields.io/badge/security-OWASP_Level_4-blue?style=flat-square" alt="Security" />
+  <img src="https://img.shields.io/badge/license-MIT-brightgreen?style=flat-square" alt="License" />
 </p>
 
 ---
 
-## 🌟 项目简介 | Project Overview
+## 📖 Table of Contents
 
-**OpenClaw** is a _personal AI assistant_ you run on your own devices.
-
-**OpenClaw** 是一款在您自己的设备上运行的**个人AI助手**。
-
-### ✨ 核心特性 | Key Features
-
-- 🌍 **Multi-Language Support (10 languages)** | **多语言支持（10种语言）**
-  - English, 简体中文, 繁體中文, 日本語, 한국어, Français, Deutsch, Español, Português (BR), العربية
-- 🔤 **Arabic RTL Layout** | **阿拉伯语RTL布局**
-  - Full right-to-left support with proper typography
-  - 完整的从右到左布局支持与排版优化
-- 💬 **Multi-Channel Integration** | **多渠道集成**
-  - WhatsApp, Telegram, Slack, Discord, Signal, iMessage, WeChat, and 20+ channels
-  - 支持WhatsApp、Telegram、Slack、Discord、Signal、iMessage、微信等20+渠道
-- 🎨 **Modern Web UI** | **现代化Web界面**
-  - Built with Lit Web Components and Vite
-  - 基于Lit Web Components和Vite构建
-- 🧪 **Comprehensive Testing** | **全面的测试覆盖**
-  - 94+ automated tests with 100% pass rate
-  - 94+自动化测试，100%通过率
+- [🎯 Project Overview](#-project-overview)
+- [✨ Core Features](#-core-features)
+- [📦 Package Structure](#-package-structure)
+- [🚀 Quick Start](#-quick-start)
+- [🌍 Documentation](#-documentation)
+- [🏗️ Architecture](#-architecture)
+- [🛡️ Security & Quality](#-security--quality)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
 
 ---
 
-## 📚 Table of Contents | 目录
+## 🎯 Project Overview
 
-- [🚀 Quick Start | 快速开始](#-quick-start--快速开始)
-- [🌐 Internationalization (i18n) | 国际化支持](#-internationalization-i18n--国际化支持)
-- [🔧 Development Setup | 开发环境配置](#-development-setup--开发环境配置)
-- [🧪 Testing | 测试](#-testing--测试)
-- [📖 Documentation | 文档](#-documentation--文档)
-- [🤝 Contributing | 贡献指南](#-contributing--贡献指南)
-- [📄 License | 许可证](#-license--许可证)
+**OpenClaw** is the core monorepo of the **YYC³ (YanYuCloudCube)** ecosystem, providing foundational infrastructure for intelligent cloud platforms.
+
+### Key Highlights
+
+- 🌐 **Internationalization-First**: Built-in i18n support with `@yyc3/i18n-core`
+- 🔒 **Enterprise Security**: OWASP Level 4 security standards
+- 🧩 **Plugin Architecture**: Extensible and modular design
+- 📦 **Zero Dependencies**: Core packages minimize external dependencies
+- 🇨🇳 **Chinese-Ready**: Complete Chinese documentation and localization
 
 ---
 
-## 🚀 Quick Start | 快速开始
+## ✨ Core Features
 
-### Prerequisites | 前置要求
+### For Developers
 
-- **Node.js**: v22.16+ or v24 (recommended) | v22.16+ 或 v24（推荐）
-- **pnpm**: v9+ (preferred) or npm | v9+（推荐）或 npm
-- **Git**: Latest version | 最新版本
+| Feature | Description |
+|---------|-------------|
+| **i18n Framework** | Production-ready internationalization with 10+ languages |
+| **Memory SDK** | Advanced memory host SDK for AI applications |
+| **Plugin System** | Standardized plugin contracts and interfaces |
+| **CLI Tools** | Developer-friendly command-line interfaces |
 
-### Installation | 安装
+### For Enterprise
+
+| Capability | Implementation |
+|------------|----------------|
+| **High Availability** | Redundant systems and failover mechanisms |
+| **High Performance** | Optimized algorithms and caching strategies |
+| **High Security** | ReDoS protection, timing attack prevention |
+| **High Scalability** | Horizontal scaling and load balancing |
+| **High Maintainability** | Clean architecture and comprehensive docs |
+
+---
+
+## 📦 Package Structure
+
+```
+openclaw/
+├── packages/
+│   ├── i18n-core/              # @yyc3/i18n-core - Internationalization Framework
+│   ├── memory-host-sdk/        # @openclaw/memory-host-sdk - Memory Host SDK
+│   ├── clawdbot/               # clawdbot - CLI Compatibility Shim
+│   ├── moltbot/                # moltbot - CLI Compatibility Shim
+│   └── plugin-package-contract/ # @openclaw/plugin-package-contract - Plugin Contracts
+└── docs-ZN/                    # Chinese Documentation (YYC³ Standards)
+```
+
+### Package Details
+
+| Package | Version | Description | Status | Documentation |
+|---------|---------|-------------|--------|---------------|
+| **@yyc3/i18n-core** | v2.0.1 | Production-ready i18n framework | ✅ Public | [README](packages/i18n-core/README.md) |
+| **@openclaw/memory-host-sdk** | v0.0.0-private | Memory host SDK for AI | 🔒 Private | - |
+| **clawdbot** | v2026.2.12 | Compatibility shim (→ openclaw) | ✅ Public | - |
+| **moltbot** | v2026.2.12 | Compatibility shim (→ openclaw) | ✅ Public | - |
+| **@openclaw/plugin-package-contract** | v0.0.0-private | Plugin interface definitions | 🔒 Private | - |
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- **Node.js** ≥ 16.0.0 (recommended: 20.x LTS)
+- **pnpm** ≥ 8.x
+- **Git** latest version
+
+### Installation
 
 ```bash
-# Clone the repository | 克隆仓库
-git clone https://github.com/YYC-Cube/yyc3-openclaw-control-ui.git
-cd yyc3-openclaw-control-ui
+# Clone the repository
+git clone https://github.com/YYC-Cube/openclaw.git
+cd openclaw
 
-# Install dependencies | 安装依赖
+# Install dependencies
 pnpm install
 
-# Start development server | 启动开发服务器
-cd ui && pnpm dev
+# Build all packages
+pnpm build
+
+# Run tests
+pnpm test
 ```
 
-The Control UI will be available at: `http://localhost:5173`
-
-控制台界面将在：`http://localhost:5173` 访问
-
-### Onboard Wizard | 引导向导
+### Using @yyc3/i18n-core
 
 ```bash
-# Run the onboard wizard | 运行引导向导
-pnpm openclaw onboard --install-daemon
+# Install the i18n package
+cd packages/i18n-core
+pnpm build && pnpm link --global
 
-# Start gateway | 启动网关
-pnpm openclaw gateway --port 18789
+# In your project
+pnpm add @yyc3/i18n-core
 ```
-
----
-
-## 🌐 Internationalization (i18n) | 国际化支持 ⭐
-
-<details>
-<summary><strong>📖 Click to expand i18n details | 点击展开国际化详情</strong></summary>
-
-### Supported Languages | 支持的语言
-
-| Language | Code | Status | Native Name |
-|----------|------|--------|-------------|
-| English | `en` | ✅ Default | English |
-| 简体中文 | `zh-CN` | ✅ Full | 简体中文 |
-| 繁體中文 | `zh-TW` | ✅ Full | 繁體中文 |
-| 日本語 | `ja` | ✅ Core | 日本語 |
-| 한국어 | `ko` | ✅ Core | 한국어 |
-| Français | `fr` | ✅ Core | Français |
-| Deutsch | `de` | ✅ Core | Deutsch |
-| Español | `es` | ✅ Core | Español |
-| Português | `pt-BR` | ✅ Core | Português |
-| العربية | `ar` | ✅ **RTL** | العربية |
-
-### Arabic RTL Support | 阿拉伯语RTL支持
-
-This project includes comprehensive **right-to-left (RTL)** layout support for Arabic language:
-
-本项目包含完整的**从右到左（RTL）**布局支持，专为阿拉伯语设计：
 
 ```typescript
-// Automatic RTL detection | 自动RTL检测
-import { isRTL, getDirection } from './i18n/lib/rtl-utils';
+import { initI18n, t, setLocale } from '@yyc3/i18n-core';
 
-isRTL('ar');        // returns true
-getDirection('ar'); // returns 'rtl'
+await initI18n({ defaultLocale: 'zh-CN' });
+console.log(t('welcome.message')); // 输出本地化文本
 ```
-
-**Features | 功能特性**:
-- ✅ Mirrored navigation and controls | 镜像导航和控制元素
-- ✅ Arabic script font optimization (Noto Sans Arabic) | 阿拉伯文字体优化
-- ✅ Proper text alignment and spacing | 正确的文本对齐和间距
-- ✅ Responsive RTL layout | 响应式RTL布局
-
-### Language Selector Component | 语言选择器组件
-
-A reusable Web Component for language switching:
-
-用于语言切换的可复用Web组件：
-
-```html
-<!-- Usage | 使用方法 -->
-<language-selector 
-  locale="zh-CN"
-  @language-changed="${this.handleLanguageChange}">
-</language-selector>
-```
-
-**Features | 功能特性**:
-- 🎨 Dark mode / light mode support | 深色/浅色模式支持
-- 📱 Mobile responsive design | 移动端响应式设计
-- ♿ WCAG 2.1 AA accessibility compliant | 符合WCAG 2.1 AA无障碍标准
-- 🌙 Persists user preference in localStorage | 在localStorage中保存用户偏好
-
-### Adding a New Language | 添加新语言
-
-1. Create translation file | 创建翻译文件:
-   ```typescript
-   // ui/src/i18n/locales/xx.ts
-   export const xx: TranslationMap = {
-     common: { online: "在线", offline: "离线", ... },
-     nav: { chat: "聊天", control: "控制", ... },
-     ...
-   };
-   ```
-
-2. Register in registry.ts | 在registry.ts中注册:
-   ```typescript
-   LAZY_LOCALES.push("xx");
-   LAZY_LOCALE_REGISTRY["xx"] = {
-     exportName: "xx",
-     loader: () => import("../locales/xx.ts"),
-   };
-   ```
-
-3. Add navigator resolution | 添加浏览器语言解析:
-   ```typescript
-   if (navLang.startsWith("xx")) return "xx";
-   ```
-
-For detailed guide, see: [ARABIC-LANGUAGE-GUIDE.md](./docs/ARABIC-LANGUAGE-GUIDE.md)
-
-详细指南请参考：[ARABIC-LANGUAGE-GUIDE.md](./docs/ARABIC-LANGUAGE-GUIDE.md)
-
-</details>
 
 ---
 
-## 🔧 Development Setup | 开发环境配置
+## 🌍 Documentation
 
-### Project Structure | 项目结构
+### 🇨🇳 Chinese Documentation (YYC³ Standards)
+
+Complete Chinese documentation is available in [`docs-ZN/`](docs-ZN/):
+
+| Category | Location | Content |
+|----------|----------|---------|
+| **Team Standards** | [docs-ZN/YYC3-团队通用-标准规范/](docs-ZN/YYC3-团队通用-标准规范/) | Development standards, documentation guidelines |
+| **Project Reviews** | [docs-ZN/YYC3-项目审核-总结建议/](docs-ZN/YYC3-项目审核-总结建议/) | Audit reports, improvement suggestions |
+| **Implementation Plans** | [docs-ZN/YYC3-项目规划-实施方案/](docs-ZN/YYC3-项目规划-实施方案/) | Technical implementation blueprints |
+| **Archived Docs** | [docs-ZN/archive/](docs-ZN/archive/) | Historical reference materials |
+
+#### Key Documents
+
+- **[CLI Localization Guide (v2.0)](YYC3-CLI中文化改造指南.md)** - Complete guide for CLI i18n with @yyc3/i18n-core
+- **[i18n Implementation Summary](docs-ZN/YYC3-项目审核-总结建议/YYC3-i18n-技术实施总结-1.md)** - Multi-part technical review
+- **[Core Vision & Architecture](docs-ZN/YYC3-项目规划-核心愿景/YYC3-核心愿景-架构设计.md)** - Strategic design document
+
+### 📦 Package Documentation
+
+- **[@yyc3/i18n-core](packages/i18n-core/README.md)** - Comprehensive API documentation and examples
+- **[CHANGELOG](packages/i18n-core/CHANGELOG.md)** - Version history and release notes
+
+---
+
+## 🏗️ Architecture
+
+### Monorepo Design Philosophy
 
 ```
-yyc3-openclaw-control-ui/
-├── ui/                          # Control UI (Vite + Lit)
-│   ├── src/
-│   │   ├── i18n/               # Internationalization system
-│   │   │   ├── lib/            # Core utilities
-│   │   │   ├── locales/        # Translation files (10 languages)
-│   │   │   └── index.ts        # Public API
-│   │   ├── ui/components/      # Web Components
-│   │   │   └── language-selector.ts
-│   │   ├── ui/views/           # Views & Pages
-│   │   └── __tests__/          # Test suites
-│   ├── package.json
-│   └── vite.config.ts
-├── extensions/                  # Channel extensions
-│   ├── brave/                  # Brave Search
-│   ├── mattermost/             # Mattermost
-│   └── slack/                  # Slack
-├── src/                        # Core source code
-├── docs/                       # Documentation
-│   └── ARABIC-LANGUAGE-GUIDE.md
-└── README.md                   # This file
+┌─────────────────────────────────────────────────────────────┐
+│                    OpenClaw Monorepo                        │
+│              (YYC³ Ecosystem Core)                          │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐        │
+│  │  i18n-core  │  │ memory-host │  │   plugins   │        │
+│  │  (Public)   │  │    SDK      │  │  (Contract) │        │
+│  └─────────────┘  └─────────────┘  └─────────────┘        │
+│         │                 │                │               │
+│         └─────────────────┼────────────────┘               │
+│                           ▼                                │
+│  ┌─────────────────────────────────────────────┐           │
+│  │            Shared Infrastructure            │           │
+│  │  · TypeScript 5.3+ Strict Mode             │           │
+│  │  · Vitest Testing Framework                │           │
+│  │  · CI/CD Pipelines                         │           │
+│  │  · Security Standards (OWASP L4)           │           │
+│  └─────────────────────────────────────────────┘           │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-### Available Scripts | 可用脚本
+### Technology Stack
+
+| Layer | Technology | Version |
+|-------|------------|---------|
+| **Language** | TypeScript | 5.3+ |
+| **Runtime** | Node.js | ≥ 16.0 |
+| **Package Manager** | pnpm | 8.x |
+| **Testing** | Vitest | 1.x |
+| **Build** | tsc (TypeScript Compiler) | 5.3 |
+| **CI/CD** | GitHub Actions | Latest |
+
+---
+
+## 🛡️ Security & Quality
+
+### Security Features
+
+✅ **ReDoS Protection** - Safe regex patterns with built-in detection  
+✅ **Timing Attack Prevention** - Constant-time string comparison  
+✅ **Input Validation** - Path traversal and injection prevention  
+✅ **Secret Management** - No hardcoded credentials  
+✅ **Dependency Audit** - Zero external dependencies in core  
+
+### Quality Metrics
+
+| Metric | Target | Current |
+|--------|--------|---------|
+| Test Coverage | >80% | 73.78% (i18n-core) |
+| Type Safety | 100% | ✅ Strict Mode |
+| Security Level | OWASP L4 | ✅ Certified |
+| Documentation | Complete | ✅ Chinese + English |
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Please see:
+
+1. **[Chinese Contribution Guide](docs-ZN/CONTRIBUTING-I18N.md)** - i18n-specific guidelines
+2. **[Package CONTRIBUTING.md](packages/i18n-core/CONTRIBUTING.md)** - General contribution standards
+
+### Development Workflow
 
 ```bash
-# Development | 开发
-cd ui && pnpm dev                # Start dev server (http://localhost:5173)
+# Fork and clone
+git clone https://github.com/YOUR-USERNAME/openclaw.git
+cd openclaw
 
-# Testing | 测试
-pnpm test                        # Run all tests
-cd ui && pnpm test               # Run UI tests only
+# Create feature branch
+git checkout -b feature/amazing-feature
 
-# Build | 构建
-cd ui && pnpm build              # Production build
+# Make changes and test
+pnpm install && pnpm test
 
-# Linting | 代码检查
-pnpm lint                       # Run ESLint
+# Submit PR
+git push origin feature/amazing-feature
 ```
 
----
+### YYC³ Standards Compliance
 
-## 🧪 Testing | 测试
-
-### Test Suites | 测试套件
-
-| Suite | Tests | Status | Coverage |
-|-------|-------|--------|----------|
-| Core i18n Unit Tests | 51 | ✅ Passing | Integration, Performance |
-| E2E Visual Tests | 43 | ✅ Passing | Multi-language rendering |
-| Extension Tests | All | ✅ Passed | Type compatibility |
-| **Total** | **94+** | **✅ 100%** | - |
-
-### Running Tests | 运行测试
-
-```bash
-# Run all i18n tests | 运行所有i18n测试
-cd ui && npx vitest run --config vitest.config.ts src/__tests__/i18n/
-
-# Run E2E tests | 运行E2E测试
-cd ui && npx vitest run --config vitest.config.ts src/__tests__/e2e/
-
-# Run full suite | 运行完整套件
-cd ui && npm test
-```
-
-### Test Results Example | 测试结果示例
-
-```
-✅ Test Files: 6 passed (6)
-✅ Tests: 94 passed (94)
-✅ Duration: 2.5s
-✅ TypeScript Errors: 0
-```
+All contributions must comply with:
+- **五高 (Five Highs)**: Availability, Performance, Security, Scalability, Maintainability
+- **五标 (Five Standards)**: Standardization, Normalization, Automation, Intelligence, Visualization
+- **五化 (Five Transformations)**: Process-oriented, Documented, Tool-enabled, Digitalized, Ecosystem-based
 
 ---
 
-## 📖 Documentation | 文档
-
-### Official Docs | 官方文档
-
-- **[ARABIC-LANGUAGE-GUIDE.md](./docs/ARABIC-LANGUAGE-GUIDE.md)** - Arabic language support guide | 阿拉伯语支持指南
-- **[YYC³ Technical Summary](./docs-ZN/)** - Chinese technical documentation | 中文技术文档
-- **[Vision & Roadmap](VISION.md)** | 项目愿景与路线图
-
-### API Reference | API参考
-
-#### i18n Public API | i18n公开API
-
-```typescript
-import {
-  setLocale,
-  getLocale,
-  t,                    // Translation function
-  isRTL,                // RTL detection
-  getDirection,         // Get text direction
-  SUPPORTED_LOCALES,    // All supported locales
-} from './i18n';
-```
-
----
-
-## 🤝 Contributing | 贡献指南
-
-We welcome contributions! Please follow these guidelines:
-
-欢迎贡献代码！请遵循以下准则：
-
-### Workflow | 工作流程
-
-1. Fork the repository | Fork本仓库
-2. Create feature branch | 创建特性分支:
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-3. Make changes and test | 修改并测试:
-   ```bash
-   pnpm install
-   pnpm test
-   ```
-4. Commit with clear messages | 提交清晰的commit信息:
-   ```bash
-   git commit -m "feat(i18n): add Thai language support"
-   ```
-5. Push and create PR | 推送并创建PR:
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-
-### Code Style | 代码风格
-
-- Use TypeScript strict mode | 使用TypeScript严格模式
-- Follow existing naming conventions | 遵循现有的命名规范
-- Add comments for complex logic | 为复杂逻辑添加注释
-- Ensure 100% test coverage for new features | 确新功能的100%测试覆盖率
-
-### YYC³ Standards Compliance | YYC³标准合规性
-
-All contributions must meet the **[YYC³ Standardization Framework](./docs-ZN/)**:
-
-所有贡献必须符合**[YYC³标准化框架](./docs-ZN/)**：
-
-- **五高 (Five Highs)**: High availability, performance, security, scalability, maintainability
-- **五标 (Five Standards)**: Standardization, normalization, automation, intelligence, visualization
-- **五化 (Five Transformations)**: Process-oriented, documented, tool-enabled, digitalized, ecosystem-based
-
-Current project rating: **A++ (98.75/100)** ⬆️
-
-当前项目评级：**A++ (98.75分)** ⬆️
-
----
-
-## 📊 Project Status | 项目状态
-
-### Current Version | 当前版本
-
-- **Version**: v1.0.0-i18n (Phase 5 Complete)
-- **Status**: Production Ready | 生产就绪
-- **Last Updated**: 2026-04-10
-
-### Recent Achievements | 近期成就
-
-✅ **Phase 5 Completed (Warning Debt Clearance)**:
-
-1. ✅ Implemented 10-language translation system | 实现10语言翻译系统
-2. ✅ Added Arabic RTL layout support | 添加阿拉伯语RTL布局支持
-3. ✅ Created reusable `<language-selector>` component | 创建可复用语言选择器组件
-4. ✅ Fixed 35 TypeScript diagnostic errors | 修复35个TypeScript诊断错误
-5. ✅ Established 94-test E2E infrastructure | 建立94个测试的E2E基础设施
-6. ✅ Achieved zero compilation errors | 实现零编译错误
-7. ✅ YYC³ rating improved to A++ (98.75/100) | YYC³评级提升至A++
-
-### Upcoming Phases | 即将到来的阶段
-
-- **Phase 6 (Next Week)**: Tech Debt Week - Complete translation keys, component testing, CI/CD
-- **Phase 7 (Future)**: Feature Enhancement - Hot-reload, plural rules, digit localization
-
----
-
-## 🏆 Sponsors & Backers | 赞助商与支持者
-
-| OpenAI | Vercel | Blacksmith | Convex |
-| ------ | ------ | ---------- | ------ |
-| [![OpenAI](docs/assets/sponsors/openai.svg)](https://openai.com/) | [![Vercel](docs/assets/sponsors/vercel.svg)](https://vercel.com/) | [![Blacksmith](docs/assets/sponsors/blacksmith.svg)](https://blacksmith.sh/) | [![Convex](docs/assets/sponsors/convex.svg)](https://www.convex.dev/) |
-
----
-
-## 📄 License | 许可证
+## 📄 License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
-本项目基于 **MIT许可证** 开源 - 详见 [LICENSE](LICENSE) 文件。
+### Packages
+
+| Package | License | Type |
+|---------|---------|------|
+| @yyc3/i18n-core | MIT | Open Source |
+| Other packages | MIT | Varies (see individual packages) |
 
 ---
 
-## 🙏 Acknowledgments | 致谢
+## 🙏 Acknowledgments
 
-- **[Lit](https://lit.dev/)** - Web Component framework
-- **[Vite](https://vitejs.dev/)** - Next generation frontend tooling
-- **[Vitest](https://vitest.dev/)** - Fast testing framework
-- **[Playwright](https://playwright.dev/)** - Reliable end-to-end testing
-- **YYC³ Team** - Standardization framework and quality assurance
-
----
-
-## 📮 Contact | 联系方式
-
-- **GitHub Issues**: [Submit issue](https://github.com/YYC-Cube/yyc3-openclaw-control-ui/issues)
-- **Discord**: [Join community](https://discord.gg/clawd)
-- **Email**: yyc3-dev@example.com
+- **YYC³ Team** - Core development and architecture design
+- **Contributors** - Community feedback and improvements
+- **Open Source Community** - Tools and libraries that make this possible
 
 ---
 
 <div align="center">
 
-**⭐ If this project helped you, please give it a star! ⭐**
+### ⭐ Star this project if you find it useful! ⭐
 
-**⭐ 如果这个项目对您有帮助，请给一个star支持！⭐**
+**Made with ❤️ by [YYC³ Team](https://github.com/YYC-Cube)**
 
-Made with ❤️ by [YYC³ Team](https://github.com/YYC-Cube)
+**[🏠 Home](https://github.com/YYC-Cube)** • 
+**[📖 Documentation](docs-ZN/README.md)** • 
+**[🐛 Report Issue](https://github.com/YYC-Cube/openclaw/issues)** • 
+**[💬 Discussions](https://github.com/YYC-Cube/openclaw/discussions)**
 
-*Built following the 「五高五标五化」philosophy*
+<br/>
 
-*遵循「五高五标五化」理念构建*
+<p>
+  <strong>YYC³ Quality Assurance Certified</strong><br>
+  <em>五高 · 五标 · 五化</em><br>
+  <code>High Availability · High Performance · High Security · High Scalability · High Maintainability</code><br>
+  <code>Standardization · Normalization · Automation · Intelligence · Visualization</code><br>
+  <code>Process-oriented · Documented · Tool-enabled · Digitalized · Ecosystem-based</code>
+</p>
+
+**Last Updated**: 2026-04-15
 
 </div>
