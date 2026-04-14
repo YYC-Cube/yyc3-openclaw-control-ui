@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { t, setLocale, getLocale, isChineseLocale } from '@yyc3/i18n-core';
+import { t, setLocale, isChineseLocale } from '@yyc3/i18n-core';
 import { setupI18n } from './i18n';
 import type { Locale } from '@yyc3/i18n-core';
 
