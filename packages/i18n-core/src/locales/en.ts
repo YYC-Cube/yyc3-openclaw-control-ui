@@ -1,0 +1,34 @@
+/**
+ * English translations
+ */
+
+export const en = {
+  common: {
+    health: "Health",
+    online: "Online",
+    offline: "Offline",
+    welcome: "Welcome",
+    save: "Save",
+    cancel: "Cancel",
+    loading: "Loading...",
+    error: "Error",
+    success: "Success",
+    version: "v2.0.0",
+  },
+  nav: {
+    home: "Home",
+    about: "About",
+    contact: "Contact",
+  },
+  overview: {
+    stats: {
+      cronNext: "Next wake {time}",
+    },
+  },
+  welcome: {
+    message: "Hello {name}",
+    title: "Welcome to YYC³ i18n Core",
+  },
+} as const;
+
+export type TranslationMap = typeof en;
